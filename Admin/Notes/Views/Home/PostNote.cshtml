@@ -1,0 +1,28 @@
+﻿@model Notes.Models.Note
+
+@{
+    ViewData["Title"] = "Note";
+}
+
+
+<div class="card">
+
+
+    <div class="card-body mb-3">
+        <h4 class="card-title text-center">@Model.Title</h4>
+        <h6 class="card-subtitle mb-2 text-muted text-center">@Model.Subtitle</h6>
+
+    </div>
+    <div class="container">
+        <article>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        @Html.Raw(Model.Content)
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+

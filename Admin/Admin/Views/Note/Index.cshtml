@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Admin.Models.Note>
+
+@{
+    ViewData["Title"] = "Note";
+}
+
+
+<a href="/Note/Note" class="btn btn-primary">Add Note</a><br />
+@foreach (var item in Model)
+{
+    <div class="card">
+
+
+        <div class="card-body mb-3">
+            <h5 class="card-title">@item.Title</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@item.Subtitle</h6>
+            <p class="card-text">@item.Content</p>
+            @if (@item.IsPublish)
+            {
+                <a class="btn btn-success">Published</a>
+                <a class="btn btn-warning" asp-route-id="@item.Id" asp-action="UpdateNote">Update</a>
+                <a class="btn btn-danger" asp-route-id="@item.Id" asp-action="DeleteNote">Delete</a> }
+            else
+            {
+                <a class="btn btn-light" asp-route-id="@item.Id" asp-action="Publish">Publish</a>
+                <a class="btn btn-warning" asp-route-id="@item.Id" asp-action="UpdateNote">Update</a>
+                <a class="btn btn-danger" asp-route-id="@item.Id" asp-action="DeleteNote">Delete</a>}
+        </div>
+
+        
+    </div>
+}
+

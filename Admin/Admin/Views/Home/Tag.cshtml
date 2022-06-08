@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Tag";
+}
+@model IEnumerable<Admin.Models.Tag>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" onclick="$('#TagModal').modal('show')">Add Tag</button>
+
+<table class="table table-hover" style="margin-top:20px;">
+    <thead>
+    <th scope="col">Id</th>
+    <th scope="col">Name</th>
+    <th scope="col"></th>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.Id</th>
+                <td>@item.Name</td>
+                <td><a class="btn btn-danger" asp-route-id="@item.Id" asp-action="DeleteTag">Delete</a></td>
+                <td><a class="btn btn-warning" onclick="updateTag(@item.Id)">Update</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal" id="TagModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Tag</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/Home/AddTag" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" name="Id" id="Id" class="form-control" />
+                        <input type="text" name="Name" id="Name" class="form-control" placeholder="Tag Name" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="clearForm()" data-dismiss="modal">Close</button>
+                    <button type="submit" id="addTag" class="btn btn-primary">Add</button>
+                    <button type="submit" id="updateTag" class="btn btn-warning">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(() => clearForm())
+        function updateTag(Id) {
+            fetch('/Home/TagUpdate?Id=' + Id)
+                .then(response => responseponse.json())
+                .then(response => {
+                    $('#Id').val(response.id)
+                    $('#Name').val(response.name)
+                })
+            $('#addTag').hide();
+            $('#updateTag').show();
+            $('#TagModal').modal('show');
+        }
+        function clearForm() {
+            $('#Id').val(null)
+            $('#Name').val(null)
+            $('#addTag').show();
+            $('#updateTag').hide();
+        }
+    </script>
+}
